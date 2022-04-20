@@ -1,0 +1,160 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  description: '항헤99 주특기 심화 - Magazine API'
+  title: 'Swagger Magazine'
+
+servers:
+  - description: '로컬 서버'
+    url: 'http://localhost:5000/api'
+  - description: '클라우드 서버'
+    url: 'http://146.56.187.171/api'
+
+tags:
+  - name: 'users'
+    description: '사용자 API { 회원가입 / 로그인 / 인증 확인 }'
+  - name: 'posts'
+    description: '게시물 API { 조회 / 생성 / 수정 / 삭제 }'
+  - name: 'like'
+    description: '게시물 좋아요 상태'
+  - name: 'comment'
+    description: '댓글 조회 / 생성 / 수정 / 삭제'
+schemas:
+  - 'http'
+
+paths:
+  /users/signup:
+    post:
+      tags:
+        - users
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                nickname:
+                  type: string
+                password:
+                  type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                nickname:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: 회원가입 성공
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '400':
+          description: 이메일, 닉네임, 비밀번호가 정해진 양식에 맞지 않습니다.
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+  /users/signin:
+    post:
+      tags:
+        - users
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: 이메일, 비밀번호가 정해진 양식에 맞지 않습니다.
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+        '402':
+          description: 이메일 또는 비밀번호가 유효하지 않습니다.
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
