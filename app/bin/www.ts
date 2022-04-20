@@ -1,5 +1,5 @@
-import app from '../app.module';
-import db from '../src/__models__';
+import app from '../app';
+import db from '../src/modules/app/app.models';
 
 const port = process.env.PORT || 5000;
 const log = `Server ruuning on port ${port}`;
