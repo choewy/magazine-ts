@@ -7,16 +7,15 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "app/types"]
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": [
     "./app/src/**/*",
     "./app/bin",
-    "app/app.module.ts",
-    "app/app.controller.ts",
+    "app/app.ts",
+    "app/src/modules/app/app.controller.ts",
     "app/app.middlware.ts",
-    "app/types",
-    "app/__tests__"
+    "test"
   ],
   "exclude": ["node_modules"]
 }
