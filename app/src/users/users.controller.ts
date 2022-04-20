@@ -1,15 +1,24 @@
-import { Router } from 'express';
-import { EmailPipe, NicknamePipe, PasswordPipe } from './users.pipe';
-import { UserSignup } from './users.service';
+import { Router, Express } from 'express';
+import { UserPipe } from './users.pipe';
+import { UserService } from './users.service';
 
-const UserController = Router();
+export const UserController = (app: Express) => {
+  const router = Router();
+  router.post(
+    '/signup',
+    UserPipe.Email,
+    UserPipe.Nickname,
+    UserPipe.Password,
+    UserPipe.NicknameInPwd,
+    UserService.userSignup
+  );
 
-UserController.post(
-  '/signup',
-  EmailPipe,
-  NicknamePipe,
-  PasswordPipe,
-  UserSignup
-);
+  router.post(
+    '/signin',
+    UserPipe.Email,
+    UserPipe.Password,
+    UserService.userSignin
+  );
 
-export default UserController;
+  return app.use('/api/users', router);
+};
