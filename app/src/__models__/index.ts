@@ -1,5 +1,5 @@
-import { Sequelize } from 'sequelize';
-import SequelizeConfig from '../configs/sequelize.config';
+import { Sequelize, Op } from 'sequelize';
+import SequelizeConfig from './config';
 import PostModel from './post';
 import UserModel from './user';
 
@@ -24,6 +24,7 @@ const sequelize = new Sequelize({
 const db = {
   Sequelize,
   sequelize,
+  Op,
   User: UserModel(sequelize),
   Post: PostModel(sequelize),
 };

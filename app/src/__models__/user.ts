@@ -19,10 +19,6 @@ export class UserModel
   public nickname!: string;
   public password!: string;
   public role!: 0;
-
-  public readonly deletedAt!: Date;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 export default (sequelize: Sequelize): typeof UserModel => {
@@ -51,8 +47,8 @@ export default (sequelize: Sequelize): typeof UserModel => {
       sequelize,
       modelName: 'User',
       tableName: 'users',
-      timestamps: true,
-      paranoid: true,
+      timestamps: false,
+      paranoid: false,
     }
   );
 
