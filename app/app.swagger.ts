@@ -2,7 +2,8 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 
-const swaggerYaml = YAML.load(path.join(__dirname, '../swagger.yaml'));
+const yamlPath = path.join(__dirname, '../swagger.yaml');
+const swaggerYaml = YAML.load(yamlPath);
 
 const Swagger = () => ({
   url: '/apiDocs',
