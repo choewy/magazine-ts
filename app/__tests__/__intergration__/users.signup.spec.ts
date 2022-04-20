@@ -1,7 +1,7 @@
 import request from 'supertest';
-import app from '../../app';
-import { UserSignupDto } from '../../users/users.dto';
-import { UserSignupTestCases } from '../../__case__/__intergration__/users.signup.case';
+import app from '../../app.module';
+import { UserSignupDto } from '../../src/users/users.dto';
+import { UserSignupTestCases } from '../__case__/__intergration__/users.signup.case';
 
 const url = '/api/users/signup';
 const testCases = UserSignupTestCases();
