@@ -99,6 +99,12 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
   },
-  "include": ["src/**/*", "bin", "src/app.ts", "test/users.pipe test.ts"],
+  "include": [
+    "./app/src/**/*",
+    "./app/bin",
+    "app/app.module.ts",
+    "app/app.controller.ts",
+    "app/app.middlware.ts"
+  ],
   "exclude": ["node_modules"]
 }

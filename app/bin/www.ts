@@ -1,4 +1,4 @@
-import app from '../app';
+import app from '../app.module';
 import db from '../src/models';
 
 const port = process.env.PORT || 5000;
