@@ -51,14 +51,8 @@ paths:
                   type: string
       responses:
         '201':
-          description: 회원가입 성공
+          description: Created
           content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
             application/json:
               schema:
                 type: object
@@ -66,16 +60,8 @@ paths:
                   ok:
                     type: boolean
         '400':
-          description: 이메일, 닉네임, 비밀번호가 정해진 양식에 맞지 않습니다.
+          description: Bad Requset
           content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
-                  message:
-                    type: string
             application/json:
               schema:
                 type: object
@@ -110,12 +96,6 @@ paths:
         '200':
           description: 로그인 성공
           content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
             application/json:
               schema:
                 type: object
@@ -127,12 +107,6 @@ paths:
         '400':
           description: 이메일, 비밀번호가 정해진 양식에 맞지 않습니다.
           content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
             application/json:
               schema:
                 type: object
@@ -144,12 +118,6 @@ paths:
         '402':
           description: 이메일 또는 비밀번호가 유효하지 않습니다.
           content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
             application/json:
               schema:
                 type: object
@@ -158,3 +126,5 @@ paths:
                     type: boolean
                   message:
                     type: string
+
+  # /users/auth:
