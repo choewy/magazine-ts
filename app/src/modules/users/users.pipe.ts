@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Exception } from '../../commons/exceptions';
-import { UserError } from '../../commons/errors';
 import { UserValidation } from '../../commons/validations';
-import { CheckToken } from '../../commons/utils';
-import { UserRepository } from './users.repository';
+import { UserPipeError } from './error/user.pipe.error';
+import { AppUtils } from '../app/app.utils';
 
 type ValidationPromise = void | Response;
 
@@ -61,7 +60,7 @@ export class UserPipe {
     try {
       const { nickname, password } = req.body;
       const isInclude = password.includes(nickname);
-      if (isInclude) throw new UserError.NicknameInPassword();
+      if (isInclude) throw new UserPipeError.NicknameInPassword();
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
@@ -75,12 +74,14 @@ export class UserPipe {
     next: NextFunction
   ): Promise<ValidationPromise> => {
     try {
-      const authorization = req.headers.authorization;
-      const payload = CheckToken(authorization);
-      if (!payload) throw new UserError.InvalidToken();
-      const user = await UserRepository.FindByPayload(Object(payload));
-      if (!user) throw new UserError.NotFound();
-      res.locals.user = user;
+      const authorization = req.headers.authorization || '';
+      const [prefix, token] = authorization.split(' ');
+      if (prefix !== 'Bearer') throw new UserPipeError.InvalidToken();
+
+      const payload = AppUtils.CheckToken(token);
+      if (!payload) throw new UserPipeError.InvalidToken();
+
+      res.locals.payload = payload;
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
