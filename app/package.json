@@ -1,11 +1,13 @@
 {
-  "name": "server",
+  "name": "typescript-magazine",
   "version": "1.0.0",
-  "description": "## Development Dependencies",
+  "description": "Magazine TypeScript Version",
   "main": "index.js",
   "scripts": {
     "test": "jest --setupFiles dotenv/config --forceExit --detectOpenHandles --coverage",
-    "start:dev": "nodemon --watch \"app/**/*.ts\" --exec \"ts-node\" app/bin/www.ts"
+    "build": "tsc && cp swagger.config.yaml dist/swagger.config.yaml",
+    "start": "node dist/bin/www.js",
+    "start:dev": " nodemon --watch \"app/**/*.ts\" --exec \"ts-node\" bin/www.ts"
   },
   "keywords": [],
   "author": "",

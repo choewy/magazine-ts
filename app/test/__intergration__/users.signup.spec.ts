@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../../app/app';
-import { UserSignupDto } from '../../app/src/modules/users/users.dto';
+import app from '../../app';
+import { UserSignupDto } from '../../src/modules/users/dto/user-signup.dto';
 import { UserSignupTestCases } from '../__case__/__intergration__/users.signup.case';
 
 const url = '/api/users/signup';

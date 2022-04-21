@@ -2,7 +2,7 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 
-const yamlPath = path.join(__dirname, '../../configs/swagger.config.yaml');
+const yamlPath = path.join(__dirname, '../../../swagger.config.yaml');
 const swaggerYaml = YAML.load(yamlPath);
 
 const Swagger = () => ({
