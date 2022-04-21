@@ -9,7 +9,7 @@ const defaultAttributes = ['user_id', 'email', 'nickname', 'role'];
 const passwdAttributes = ['nickname, password'];
 
 export class UserRepository extends db.User {
-  public static findUserByEmail = async (
+  protected static findUserByEmail = async (
     email: string
   ): Promise<UserDefaltDto | null> => {
     try {
@@ -25,7 +25,7 @@ export class UserRepository extends db.User {
     }
   };
 
-  public static findPassword = async (
+  protected static findPassword = async (
     email: string
   ): Promise<FindPasswordDto | null> => {
     try {
@@ -41,7 +41,7 @@ export class UserRepository extends db.User {
     }
   };
 
-  public static createUser = async (
+  protected static createUser = async (
     userSignupDto: UserSignupDto
   ): Promise<void> => {
     try {
