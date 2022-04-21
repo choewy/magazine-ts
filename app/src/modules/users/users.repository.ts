@@ -2,8 +2,9 @@ import db from '../app/app.models';
 import { UserDefaltDto } from './dto/user-default.dto';
 import { UserSignupDto } from './dto/user-signup.dto';
 import { UserPasswordDto } from './dto/user-password.dto';
-import { UserRepositoryError } from './error/user.repository.error';
+import { DBErrors } from '../../commons/errors';
 
+const Errors = DBErrors('UserRepository');
 const Options = { raw: true, nest: true };
 const UserDefaultAttributes = ['user_id', 'email', 'nickname', 'role'];
 const UserPasswdAttributes = ['nickname, password'];
@@ -19,7 +20,7 @@ export class UserRepository extends db.User {
         attributes: UserDefaultAttributes,
       });
     } catch (error) {
-      throw new UserRepositoryError.find(error);
+      throw new Errors.find(error);
     }
   };
 
@@ -33,7 +34,7 @@ export class UserRepository extends db.User {
         attributes: UserPasswdAttributes,
       });
     } catch (error) {
-      throw new UserRepositoryError.find(error);
+      throw new Errors.find(error);
     }
   };
 
@@ -43,7 +44,7 @@ export class UserRepository extends db.User {
     try {
       await this.create(userSignupDto);
     } catch (error) {
-      throw new UserRepositoryError.create(error);
+      throw new Errors.create(error);
     }
   };
 }

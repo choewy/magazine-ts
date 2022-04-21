@@ -22,3 +22,26 @@ export class SystemError extends Error {
     };
   }
 }
+
+export const DBErrors = (repositoryName: string) => ({
+  find: class extends SystemError {
+    constructor(public error: unknown) {
+      super(500, `FindError : ${repositoryName}`, error);
+    }
+  },
+  create: class extends SystemError {
+    constructor(public error: unknown) {
+      super(500, `CreateError : ${repositoryName}`, error);
+    }
+  },
+  update: class extends SystemError {
+    constructor(public error: unknown) {
+      super(500, `UpdateError : ${repositoryName}`, error);
+    }
+  },
+  delete: class extends SystemError {
+    constructor(public error: unknown) {
+      super(500, `DeleteError : ${repositoryName}`, error);
+    }
+  },
+});
