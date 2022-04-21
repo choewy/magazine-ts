@@ -6,6 +6,8 @@ import { AppUtils } from '../app/app.utils';
 import { UserEmail } from './validation/user-email.validation';
 import { UserNickname } from './validation/user-nickname.validation';
 import { UserPassword } from './validation/user-password.validation';
+import { UserService } from './users.service';
+import { UserServiceError } from './error/user.service.error';
 
 export class UserPipe {
   public static Email = async (
@@ -99,7 +101,11 @@ export class UserPipe {
       const payload = AppUtils.CheckToken(token);
       if (!payload) throw new UserPipeError.InvalidToken();
 
-      res.locals.payload = payload;
+      const { email } = payload;
+      const user = await UserService.findUserByEmail(email);
+      if (!user) throw new UserServiceError.NotFound();
+
+      res.locals.user = user;
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
