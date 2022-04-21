@@ -1,12 +1,12 @@
 import db from '../app/app.models';
 import { UserDefaltDto } from './dto/user-default.dto';
 import { UserSignupDto } from './dto/user-signup.dto';
+import { UserPasswordDto } from './dto/user-password.dto';
 import { UserRepositoryError } from './error/user.repository.error';
-import { FindPasswordDto } from './dto/find-password.dto';
 
 const Options = { raw: true, nest: true };
-const defaultAttributes = ['user_id', 'email', 'nickname', 'role'];
-const passwdAttributes = ['nickname, password'];
+const UserDefaultAttributes = ['user_id', 'email', 'nickname', 'role'];
+const UserPasswdAttributes = ['nickname, password'];
 
 export class UserRepository extends db.User {
   protected static findUserByEmail = async (
@@ -15,10 +15,8 @@ export class UserRepository extends db.User {
     try {
       return await this.findOne({
         ...Options,
-        where: {
-          [db.Op.or]: [{ email }],
-          attribute: defaultAttributes,
-        },
+        where: { email },
+        attributes: UserDefaultAttributes,
       });
     } catch (error) {
       throw new UserRepositoryError.find(error);
@@ -27,14 +25,12 @@ export class UserRepository extends db.User {
 
   protected static findPassword = async (
     email: string
-  ): Promise<FindPasswordDto | null> => {
+  ): Promise<UserPasswordDto | null> => {
     try {
       return await this.findOne({
         ...Options,
-        where: {
-          [db.Op.or]: [{ email }],
-        },
-        attributes: passwdAttributes,
+        where: { email },
+        attributes: UserPasswdAttributes,
       });
     } catch (error) {
       throw new UserRepositoryError.find(error);
