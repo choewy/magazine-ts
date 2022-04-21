@@ -14,6 +14,7 @@
     "./app/bin",
     "app/app.ts",
     "app/src/modules/app/app.controller.ts",
+    "app/src/modules/posts/error/post.pipe.error.ts",
     "app/app.middlware.ts",
     "test"
   ],
