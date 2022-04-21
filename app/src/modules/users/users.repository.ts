@@ -6,6 +6,15 @@ import { UserError } from '../../commons/errors';
 import db from '../app/app.models';
 
 export class UserRepository {
+  /* TODO : Repository에는 단순 DB 처리만 할 수 있도록 수정할 것 */
+  /*
+    - [ ] : findByPayload
+    - [ ] : findByEmail
+    - [ ] : createUser
+    - [ ] : updateUser
+    - [ ] : deleteUser
+  */
+
   /* 토큰에 담긴 Payload로 사용자 정보 조회 */
   public static FindByPayload = async (
     payload: UserPayload
