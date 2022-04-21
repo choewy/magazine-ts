@@ -47,13 +47,32 @@ export class PostPipe {
     next: NextFunction
   ): Promise<PipePromise> {
     try {
-      const { user_id } = res.locals.user;
       const post_id: number = Number(req.params.post_id);
       if (isNaN(post_id)) throw new PostPipeError.InValidParams();
 
       const post = await PostService.getPost(post_id);
       if (!post) throw new PostPipeError.NotFound();
 
+      next();
+    } catch (error) {
+      const { code, body } = new Exception(error);
+      return res.status(code).send(body);
+    }
+  }
+
+  public static async Accessable(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<PipePromise> {
+    try {
+      const post_id: number = Number(req.params.post_id);
+      if (isNaN(post_id)) throw new PostPipeError.InValidParams();
+
+      const post = await PostService.getPost(post_id);
+      if (!post) throw new PostPipeError.NotFound();
+
+      const { user_id } = res.locals.user;
       const isOwner = post.user?.user_id === user_id;
       const isAdmin = post.user?.role === 1;
       if (!isOwner && !isAdmin) throw new PostPipeError.AccessDenied();

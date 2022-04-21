@@ -20,14 +20,14 @@ export const PostController = (app: Express) => {
   router.patch(
     '/:post_id',
     UserPipe.isLogin,
-    PostPipe.IsExist,
+    PostPipe.Accessable,
     PostPipe.Content,
     PostService.UpdatePost
   );
   router.delete(
     '/:post_id',
     UserPipe.isLogin,
-    PostPipe.IsExist,
+    PostPipe.Accessable,
     PostService.DeletePost
   );
 
