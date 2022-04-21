@@ -76,6 +76,19 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    example: false
+                  message:
+                    type: string
+        '409':
+          description: Comflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
                   message:
                     type: string
   /users/signin:
@@ -102,7 +115,7 @@ paths:
                   type: string
       responses:
         '200':
-          description: 로그인 성공
+          description: Ok
           headers:
             Set-Cookie:
               token:
@@ -114,10 +127,8 @@ paths:
                 properties:
                   ok:
                     type: boolean
-                  message:
-                    type: string
         '400':
-          description: 이메일, 비밀번호가 정해진 양식에 맞지 않습니다.
+          description: Bad Request
           content:
             application/json:
               schema:
@@ -125,10 +136,11 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    example: false
                   message:
                     type: string
         '401':
-          description: 이메일 또는 비밀번호가 유효하지 않습니다.
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -136,10 +148,11 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    example: false
                   message:
                     type: string
         '404':
-          description: 사용자를 찾을 수 없습니다.
+          description: Not Found
           content:
             application/json:
               schema:
@@ -147,9 +160,9 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    example: false
                   message:
                     type: string
-
   /users/auth:
     get:
       tags:
@@ -158,22 +171,7 @@ paths:
         - bearerAuth: []
       responses:
         '200':
-          description: 인가 확인 성공
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user_id:
-                    type: integer
-                  email:
-                    type: string
-                  nickname:
-                    type: string
-                  role:
-                    type: integer
-        '402':
-          description: 인가 확인 실패
+          description: Ok
           content:
             application/json:
               schema:
@@ -181,10 +179,31 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                  user:
+                    type: object
+                    properties:
+                      user_id:
+                        type: integer
+                      email:
+                        type: string
+                      nickname:
+                        type: string
+                      role:
+                        type: integer
+        '402':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
                   message:
                     type: string
         '404':
-          description: 사용자 정보 조회 실패
+          description: Not Found
           content:
             application/json:
               schema:
@@ -192,5 +211,306 @@ paths:
                 properties:
                   ok:
                     type: boolean
+                    example: false
+                  message:
+                    type: string
+  /posts:
+    get:
+      tags:
+        - posts
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  rows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        post_id:
+                          type: integer
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        image_url:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                        user:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            email:
+                              type: string
+                            nickname:
+                              type: string
+                        likes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: integer
+    post:
+      tags:
+        - posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '400':
+          description: Bad Requset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+  /posts/{post_id}:
+    get:
+      tags:
+        - posts
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  row:
+                    type: object
+                    properties:
+                      post_id:
+                        type: integer
+                      title:
+                        type: string
+                      content:
+                        type: string
+                      image_url:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          email:
+                            type: string
+                          nickname:
+                            type: string
+                      likes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+    patch:
+      tags:
+        - posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '400':
+          description: Bad Requset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+    delete:
+      tags:
+        - posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
                   message:
                     type: string
