@@ -38,7 +38,7 @@ export class UserService extends UserRepository {
       const userSigninDto: UserSigninDto = req.body;
       const { email, password } = userSigninDto;
 
-      const userPasswordDto = await this.findPassword(password);
+      const userPasswordDto = await this.findPassword(email);
       if (!userPasswordDto) throw new UserServiceError.NotFound();
 
       const validPassword = AppUtils.ComparePassword(userPasswordDto, password);
