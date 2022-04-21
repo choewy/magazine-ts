@@ -9,6 +9,7 @@ export class LikeModel extends Model<Like, {}> implements Like {
   public user_id!: number;
   public post_id!: number;
 }
+
 export default (sequelize: Sequelize): typeof LikeModel => {
   LikeModel.init(
     {
