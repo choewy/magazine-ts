@@ -8,5 +8,5 @@ export const LikeController = (app: Express) => {
 
   router.put('/like', UserPipe.isLogin, PostPipe.IsExist, LikeService.PostLike);
 
-  return app.use('/posts/:post_id/', router);
+  return app.use('/api/posts/:post_id', router);
 };
