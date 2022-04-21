@@ -8,12 +8,12 @@ const Options = { raw: true, nest: true };
 const defaultAttributes = ['user_id', 'email', 'nickname', 'role'];
 const passwdAttributes = ['nickname, password'];
 
-export class UserRepository {
+export class UserRepository extends db.User {
   public static findUserByEmail = async (
     email: string
   ): Promise<UserDefaltDto | null> => {
     try {
-      return await db.User.findOne({
+      return await this.findOne({
         ...Options,
         where: {
           [db.Op.or]: [{ email }],
@@ -29,7 +29,7 @@ export class UserRepository {
     email: string
   ): Promise<FindPasswordDto | null> => {
     try {
-      return await db.User.findOne({
+      return await this.findOne({
         ...Options,
         where: {
           [db.Op.or]: [{ email }],
@@ -45,7 +45,7 @@ export class UserRepository {
     userSignupDto: UserSignupDto
   ): Promise<void> => {
     try {
-      await db.User.create(userSignupDto);
+      await this.create(userSignupDto);
     } catch (error) {
       throw new UserRepositoryError.create(error);
     }
