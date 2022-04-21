@@ -1,20 +1,21 @@
 import { NextFunction, Request, Response } from 'express';
-import { Exception } from '../../commons/exceptions';
-import { UserValidation } from '../../commons/validations';
 import { UserPipeError } from './error/user.pipe.error';
+import { PipePromise } from '../../commons/interfaces';
+import { Exception } from '../../commons/exceptions';
 import { AppUtils } from '../app/app.utils';
-
-type ValidationPromise = void | Response;
+import { UserEmail } from './validation/user-email.validation';
+import { UserNickname } from './validation/user-nickname.validation';
+import { UserPassword } from './validation/user-password.validation';
 
 export class UserPipe {
   public static Email = async (
     req: Request<{ email: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<ValidationPromise> => {
+  ): Promise<PipePromise> => {
     try {
       const { email } = req.body;
-      await UserValidation.Email().validateAsync(email);
+      await UserEmail().validateAsync(email);
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
@@ -26,10 +27,10 @@ export class UserPipe {
     req: Request<{ nickname: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<ValidationPromise> => {
+  ): Promise<PipePromise> => {
     try {
       const { nickname } = req.body;
-      await UserValidation.Nickname().validateAsync(nickname);
+      await UserNickname().validateAsync(nickname);
       return next();
     } catch (error) {
       const { code, body } = new Exception(error);
@@ -41,10 +42,10 @@ export class UserPipe {
     req: Request<{ password: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<ValidationPromise> => {
+  ): Promise<PipePromise> => {
     try {
       const { password } = req.body;
-      await UserValidation.Password().validateAsync(password);
+      await UserPassword().validateAsync(password);
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
@@ -56,7 +57,7 @@ export class UserPipe {
     req: Request<{ password: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<ValidationPromise> => {
+  ): Promise<PipePromise> => {
     try {
       const { nickname, password } = req.body;
       const isInclude = password.includes(nickname);
@@ -68,11 +69,28 @@ export class UserPipe {
     }
   };
 
+  public static ConfirmPassword = async (
+    req: Request<{ password: string; confirmPassword: string }>,
+    res: Response,
+    next: NextFunction
+  ): Promise<PipePromise> => {
+    try {
+      const { password, confirmPassword } = req.body;
+      await UserPassword().validateAsync(confirmPassword);
+      const isEqual = password === confirmPassword;
+      if (!isEqual) throw new UserPipeError.NotEqualPassword();
+      next();
+    } catch (error) {
+      const { code, body } = new Exception(error);
+      return res.status(code).send(body);
+    }
+  };
+
   public static isLogin = async (
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ValidationPromise> => {
+  ): Promise<PipePromise> => {
     try {
       const authorization = req.headers.authorization || '';
       const [prefix, token] = authorization.split(' ');
