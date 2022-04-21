@@ -6,7 +6,7 @@ import { UserSignupDto } from './dto/user-signup.dto';
 import { UserServiceError } from './error/user.service.error';
 import { UserRepository } from './users.repository';
 
-export class UserService {
+export class UserService extends UserRepository {
   public static Signup = async (
     req: Request<UserSignupDto>,
     res: Response
@@ -17,14 +17,14 @@ export class UserService {
       const { email, nickname, password } = userSignupDto;
 
       /* Step #1 : 이메일 존재 여부 확인 */
-      const userExistance = await UserRepository.findUserByEmail(email);
+      const userExistance = await this.findUserByEmail(email);
       if (userExistance) throw new UserServiceError.AleadyExist();
 
       /* Step #2 : 비밀번호 암호화 처리 */
       userSignupDto.password = AppUtils.PasswordHash(password);
 
       /* Step #3 : 회원가입 진행 */
-      await UserRepository.createUser(userSignupDto);
+      await this.createUser(userSignupDto);
 
       /* Step #4 : 토큰 발급 */
       const userPayload = { email, nickname };
@@ -49,7 +49,7 @@ export class UserService {
       const { email, password } = userSigninDto;
 
       /* Step #1 : email에 해당하는 비밀번호 존재 여부 확인 */
-      const userPasswordDto = await UserRepository.findPassword(password);
+      const userPasswordDto = await this.findPassword(password);
       if (!userPasswordDto) throw new UserServiceError.NotFound();
 
       /* Step #2 : 비밀번호 일치 여부 확인 */
@@ -75,7 +75,7 @@ export class UserService {
       const { email } = res.locals.payload;
 
       /* Step #1 : email에 해당하는 사용자 존재 여부 확인 */
-      const user = await UserRepository.findUserByEmail(email);
+      const user = await this.findUserByEmail(email);
       if (!user) throw new UserServiceError.NotFound();
 
       /* Step #2 : 응답 */
