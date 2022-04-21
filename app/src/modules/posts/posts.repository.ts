@@ -1,7 +1,7 @@
 import db from '../app/app.models';
-import { DBErrors } from '../../commons/errors';
 import { PostCreateDto } from './dto/post-create.dto';
 import { PostDefaultDto } from './dto/post-default.dto';
+import { DBErrors } from '../../commons/errors';
 
 const Errors = DBErrors('PostRepository');
 const Options = { raw: true, nest: true };
@@ -15,7 +15,7 @@ const PostDefaultAttributes = [
 const UserDefaultAttributes = ['user_id', 'email', 'nickname', 'role'];
 
 export class PostRepository extends db.Post {
-  protected static async getPosts(): Promise<PostDefaultDto[]> {
+  public static async getPosts(): Promise<PostDefaultDto[]> {
     try {
       const likes = await db.Like.findAll({ ...Options });
       const posts: PostDefaultDto[] = await this.findAll({
