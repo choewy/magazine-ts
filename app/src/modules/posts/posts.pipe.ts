@@ -10,11 +10,11 @@ export interface PostNewDto {
 }
 
 export class PostPipe {
-  public static Image = async (
+  public static async Image(
     req: Request<PostNewDto>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { file } = req;
       if (!file) throw new PostPipeError.EmptyImage();
@@ -24,13 +24,13 @@ export class PostPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static Content = async (
+  public static async Content(
     req: Request<PostNewDto>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { content } = req.body;
       if (!content) throw new PostPipeError.EmptyContent();
@@ -39,13 +39,13 @@ export class PostPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static IsExist = async (
+  public static async IsExist(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { user_id } = res.locals.user;
       const post_id: number = Number(req.params.post_id);
@@ -63,5 +63,5 @@ export class PostPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 }

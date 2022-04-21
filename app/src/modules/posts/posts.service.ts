@@ -5,10 +5,7 @@ import { PostServiceError } from './error/post.service.error';
 import { PostRepository } from './posts.repository';
 
 export class PostService extends PostRepository {
-  public static GetPosts = async (
-    _: Request,
-    res: Response
-  ): Promise<Response> => {
+  public static async GetPosts(_: Request, res: Response): Promise<Response> {
     try {
       const rows = await this.getPosts();
       return res.status(200).send({ ok: true, rows });
@@ -16,12 +13,9 @@ export class PostService extends PostRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static GetPost = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
+  public static async GetPost(req: Request, res: Response): Promise<Response> {
     try {
       const { post_id } = req.params;
       const row = await this.getPost(Number(post_id));
@@ -31,12 +25,12 @@ export class PostService extends PostRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static CreatePost = async (
+  public static async CreatePost(
     req: Request,
     res: Response
-  ): Promise<Response> => {
+  ): Promise<Response> {
     try {
       const { user_id } = res.locals.user;
       const postCreateDto: PostCreateDto = { ...req.body, user_id };
@@ -46,12 +40,12 @@ export class PostService extends PostRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static UpdatePost = async (
+  public static async UpdatePost(
     req: Request,
     res: Response
-  ): Promise<Response> => {
+  ): Promise<Response> {
     try {
       const { post_id } = req.params;
       const { content } = req.body;
@@ -61,12 +55,12 @@ export class PostService extends PostRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static DeletePost = async (
+  public static async DeletePost(
     req: Request,
     res: Response
-  ): Promise<Response> => {
+  ): Promise<Response> {
     try {
       const { post_id } = req.params;
       await this.deletePost(Number(post_id));
@@ -75,5 +69,5 @@ export class PostService extends PostRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 }

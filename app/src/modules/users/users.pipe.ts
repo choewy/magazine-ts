@@ -10,11 +10,11 @@ import { UserService } from './users.service';
 import { UserServiceError } from './error/user.service.error';
 
 export class UserPipe {
-  public static Email = async (
+  public static async Email(
     req: Request<{ email: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { email } = req.body;
       await UserEmail().validateAsync(email);
@@ -23,13 +23,13 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static Nickname = async (
+  public static async Nickname(
     req: Request<{ nickname: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { nickname } = req.body;
       await UserNickname().validateAsync(nickname);
@@ -38,13 +38,13 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static Password = async (
+  public static async Password(
     req: Request<{ password: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { password } = req.body;
       await UserPassword().validateAsync(password);
@@ -53,13 +53,13 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static NicknameInPwd = async (
+  public static async NicknameInPwd(
     req: Request<{ password: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { nickname, password } = req.body;
       const isInclude = password.includes(nickname);
@@ -69,13 +69,13 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static ConfirmPassword = async (
+  public static async ConfirmPassword(
     req: Request<{ password: string; confirmPassword: string }>,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const { password, confirmPassword } = req.body;
       await UserPassword().validateAsync(confirmPassword);
@@ -86,13 +86,13 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static isLogin = async (
+  public static async isLogin(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<PipePromise> => {
+  ): Promise<PipePromise> {
     try {
       const authorization = req.headers.authorization || '';
       const [prefix, token] = authorization.split(' ');
@@ -111,5 +111,5 @@ export class UserPipe {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 }

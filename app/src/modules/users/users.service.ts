@@ -7,10 +7,10 @@ import { UserServiceError } from './error/user.service.error';
 import { UserRepository } from './users.repository';
 
 export class UserService extends UserRepository {
-  public static Signup = async (
+  public static async Signup(
     req: Request<UserSignupDto>,
     res: Response
-  ): Promise<Response> => {
+  ): Promise<Response> {
     try {
       const userSignupDto: UserSignupDto = req.body;
       const { email, nickname, password } = userSignupDto;
@@ -28,12 +28,12 @@ export class UserService extends UserRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static Signin = async (
+  public static async Signin(
     req: Request<UserSigninDto>,
     res: Response
-  ): Promise<Response> => {
+  ): Promise<Response> {
     try {
       const userSigninDto: UserSigninDto = req.body;
       const { email, password } = userSigninDto;
@@ -52,13 +52,13 @@ export class UserService extends UserRepository {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  };
+  }
 
-  public static Auth = async (_: Request, res: Response): Promise<Response> => {
+  public static async Auth(_: Request, res: Response): Promise<Response> {
     const user = res.locals.user;
     return res.status(200).send({
       ok: true,
       user,
     });
-  };
+  }
 }
