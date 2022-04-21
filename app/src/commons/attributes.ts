@@ -1,6 +1,6 @@
 export const UserAttrs = {
   default: ['user_id', 'email', 'nickname', 'role'],
-  password: ['nickname, password'],
+  password: ['nickname', 'password'],
 };
 
 export const PostAttrs = {

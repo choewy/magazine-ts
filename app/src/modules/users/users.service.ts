@@ -7,10 +7,10 @@ import { UserServiceError } from './error/user.service.error';
 import { UserRepository } from './users.repository';
 
 export class UserService extends UserRepository {
-  public static async Signup(
+  public static Signup = async (
     req: Request<UserSignupDto>,
     res: Response
-  ): Promise<Response> {
+  ): Promise<Response> => {
     try {
       const userSignupDto: UserSignupDto = req.body;
       const { email, nickname, password } = userSignupDto;
@@ -23,17 +23,17 @@ export class UserService extends UserRepository {
       const userPayload = { email, nickname };
       const accessToken = AppUtils.GenToken(userPayload);
       res.cookie('token', accessToken);
-      return res.status(201).send({ ok: true });
+      return res.status(201).send({ ok: true, token: accessToken });
     } catch (error) {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  }
+  };
 
-  public static async Signin(
+  public static Signin = async (
     req: Request<UserSigninDto>,
     res: Response
-  ): Promise<Response> {
+  ): Promise<Response> => {
     try {
       const userSigninDto: UserSigninDto = req.body;
       const { email, password } = userSigninDto;
@@ -47,18 +47,18 @@ export class UserService extends UserRepository {
       const userPayload = { email, nickname: userPasswordDto.nickname };
       const accessToken = AppUtils.GenToken(userPayload);
       res.cookie('token', accessToken);
-      return res.status(200).send({ ok: true });
+      return res.status(200).send({ ok: true, token: accessToken });
     } catch (error) {
       const { code, body } = new Exception(error);
       return res.status(code).send(body);
     }
-  }
+  };
 
-  public static async Auth(_: Request, res: Response): Promise<Response> {
+  public static Auth = async (_: Request, res: Response): Promise<Response> => {
     const user = res.locals.user;
     return res.status(200).send({
       ok: true,
       user,
     });
-  }
+  };
 }
