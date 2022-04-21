@@ -2,31 +2,24 @@ import db from '../app/app.models';
 import { PostCreateDto } from './dto/post-create.dto';
 import { PostDefaultDto } from './dto/post-default.dto';
 import { DBErrors } from '../../commons/errors';
+import { DefaultOptions } from '../../commons/options';
+import { PostAttrs } from '../../commons/attributes';
 
 const Errors = DBErrors('PostRepository');
-const Options = { raw: true, nest: true };
-const PostDefaultAttributes = [
-  'post_id',
-  'content',
-  'image_url',
-  'createdAt',
-  'updatedAt',
-];
-const UserDefaultAttributes = ['user_id', 'email', 'nickname', 'role'];
 
 export class PostRepository extends db.Post {
   public static async getPosts(): Promise<PostDefaultDto[]> {
     try {
-      const likes = await db.Like.findAll({ ...Options });
+      const likes = await db.Like.findAll({ ...DefaultOptions });
       const posts: PostDefaultDto[] = await this.findAll({
-        ...Options,
-        attributes: PostDefaultAttributes,
+        ...DefaultOptions,
+        attributes: PostAttrs.default,
         include: [
           {
-            ...Options,
+            ...DefaultOptions,
             model: db.User,
             as: 'user',
-            attributes: UserDefaultAttributes,
+            attributes: PostAttrs.user,
           },
         ],
         order: [[db.sequelize.literal('createdAt'), 'DESC']],
@@ -48,17 +41,20 @@ export class PostRepository extends db.Post {
 
   public static async getPost(post_id: number): Promise<PostDefaultDto | null> {
     try {
-      const likes = await db.Like.findAll({ ...Options, where: { post_id } });
+      const likes = await db.Like.findAll({
+        ...DefaultOptions,
+        where: { post_id },
+      });
       const post: PostDefaultDto | null = await this.findOne({
-        ...Options,
+        ...DefaultOptions,
         where: [{ post_id }],
-        attributes: PostDefaultAttributes,
+        attributes: PostAttrs.default,
         include: [
           {
-            ...Options,
+            ...DefaultOptions,
             model: db.User,
             as: 'user',
-            attributes: UserDefaultAttributes,
+            attributes: PostAttrs.user,
           },
         ],
       });

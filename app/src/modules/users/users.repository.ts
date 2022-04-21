@@ -3,11 +3,10 @@ import { UserDefaltDto } from './dto/user-default.dto';
 import { UserSignupDto } from './dto/user-signup.dto';
 import { UserPasswordDto } from './dto/user-password.dto';
 import { DBErrors } from '../../commons/errors';
+import { DefaultOptions } from '../../commons/options';
+import { UserAttrs } from '../../commons/attributes';
 
 const Errors = DBErrors('UserRepository');
-const Options = { raw: true, nest: true };
-const UserDefaultAttributes = ['user_id', 'email', 'nickname', 'role'];
-const UserPasswdAttributes = ['nickname, password'];
 
 export class UserRepository extends db.User {
   public static findUserByEmail = async (
@@ -15,9 +14,9 @@ export class UserRepository extends db.User {
   ): Promise<UserDefaltDto | null> => {
     try {
       return await this.findOne({
-        ...Options,
+        ...DefaultOptions,
         where: { email },
-        attributes: UserDefaultAttributes,
+        attributes: UserAttrs.default,
       });
     } catch (error) {
       throw new Errors.find(error);
@@ -29,9 +28,9 @@ export class UserRepository extends db.User {
   ): Promise<UserPasswordDto | null> => {
     try {
       return await this.findOne({
-        ...Options,
+        ...DefaultOptions,
         where: { email },
-        attributes: UserPasswdAttributes,
+        attributes: UserAttrs.password,
       });
     } catch (error) {
       throw new Errors.find(error);
