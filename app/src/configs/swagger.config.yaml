@@ -15,9 +15,9 @@ tags:
     description: '사용자 API { 회원가입 / 로그인 / 인증 확인 }'
   - name: 'posts'
     description: '게시물 API { 조회 / 생성 / 수정 / 삭제 }'
-  - name: 'like'
+  - name: 'likes'
     description: '게시물 좋아요 상태'
-  - name: 'comment'
+  - name: 'comments'
     description: '댓글 조회 / 생성 / 수정 / 삭제'
 
 schemes:
@@ -31,6 +31,7 @@ components:
       bearerFormat: JWT
 
 paths:
+  # 회원가입
   /users/signup:
     post:
       tags:
@@ -91,6 +92,8 @@ paths:
                     example: false
                   message:
                     type: string
+
+  # 로그인
   /users/signin:
     post:
       tags:
@@ -163,6 +166,8 @@ paths:
                     example: false
                   message:
                     type: string
+
+  # 인증 확인
   /users/auth:
     get:
       tags:
@@ -214,7 +219,10 @@ paths:
                     example: false
                   message:
                     type: string
+
+  # 모든 게시물 조회, 게시물 생성
   /posts:
+    # 모든 게시물 조회
     get:
       tags:
         - posts
@@ -261,6 +269,8 @@ paths:
                             properties:
                               user_id:
                                 type: integer
+
+    # 게시물 생성
     post:
       tags:
         - posts
@@ -268,7 +278,7 @@ paths:
         - bearerAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -332,7 +342,10 @@ paths:
                     example: false
                   message:
                     type: string
+
+  # 특정 게시물 조회, 게시물 수정, 게시물 삭제
   /posts/{post_id}:
+    # 특정 게시물 조회
     get:
       tags:
         - posts
@@ -396,6 +409,8 @@ paths:
                     example: false
                   message:
                     type: string
+
+    # 게시물 수정
     patch:
       tags:
         - posts
@@ -468,9 +483,306 @@ paths:
                     example: false
                   message:
                     type: string
+
+    # 게시물 삭제
     delete:
       tags:
         - posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+
+  # 게시물 좋아요/취소 처리
+  /posts/{post_id}/like:
+    put:
+      tags:
+        - likes
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+
+  # 모든 댓글 조회, 댓글 생성
+  /posts/{post_id}/comments:
+    # 댓글 조회
+    get:
+      tags:
+        - comments
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+
+    # 댓글 등록
+    post:
+      tags:
+        - comments
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+
+  # 댓글 수정과 삭제
+  /posts/{post_id}/comments/{comment_id}:
+    # 댓글 수정
+    patch:
+      tags:
+        - comments
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+
+    # 댓글 삭제
+    delete:
+      tags:
+        - comments
       security:
         - bearerAuth: []
       parameters:
