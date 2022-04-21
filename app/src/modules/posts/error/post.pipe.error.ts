@@ -13,7 +13,7 @@ export const PostPipeError = {
   },
   InValidParams: class extends HTTPError {
     constructor() {
-      super(400, '게시물 번호가 잘못 입력되었습니다.');
+      super(404, '잘못된 요청입니다.');
     }
   },
   NotFound: class extends HTTPError {
