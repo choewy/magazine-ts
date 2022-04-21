@@ -11,7 +11,7 @@ export const PostController = (app: Express) => {
   router.get('/:post_id', PostService.GetPost);
   router.post(
     '/',
-    UserPipe.isLogin,
+    UserPipe.IsLogin,
     ImageUploader.single('image'),
     PostPipe.Image,
     PostPipe.Content,
@@ -19,14 +19,14 @@ export const PostController = (app: Express) => {
   );
   router.patch(
     '/:post_id',
-    UserPipe.isLogin,
-    PostPipe.Accessable,
+    UserPipe.IsLogin,
     PostPipe.Content,
+    PostPipe.Accessable,
     PostService.UpdatePost
   );
   router.delete(
     '/:post_id',
-    UserPipe.isLogin,
+    UserPipe.IsLogin,
     PostPipe.Accessable,
     PostService.DeletePost
   );

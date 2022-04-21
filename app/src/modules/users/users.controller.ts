@@ -14,7 +14,7 @@ export const UserController = (app: Express) => {
     UserService.Signup
   );
   router.post('/signin', UserPipe.Email, UserPipe.Password, UserService.Signin);
-  router.get('/auth', UserPipe.isLogin, UserService.Auth);
+  router.get('/auth', UserPipe.IsLogin, UserService.Auth);
 
   return app.use('/api/users', router);
 };

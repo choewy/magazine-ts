@@ -95,7 +95,7 @@ export class UserPipe {
     }
   }
 
-  public static async isLogin(
+  public static async IsLogin(
     req: Request,
     res: Response,
     next: NextFunction
