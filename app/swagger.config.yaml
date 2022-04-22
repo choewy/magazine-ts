@@ -5,8 +5,8 @@ info:
   title: 'Swagger Magazine'
 
 servers:
-  - description: '로컬 서버'
-    url: 'http://localhost:5000/api'
+  # - description: '로컬 서버'
+  # url: 'http://localhost:5000/api'
   - description: '클라우드 서버'
     url: 'http://146.56.187.171/api'
 
