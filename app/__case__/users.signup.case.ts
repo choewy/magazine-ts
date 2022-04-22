@@ -8,11 +8,19 @@ export const UserSignupTestCases = () => [
     },
   },
   {
+    statusCode: 409,
+    body: {
+      email: 'choewy32@gmail.com',
+      nickname: 'choewy',
+      password: 'test',
+    },
+  },
+  {
     statusCode: 400,
     body: {
       email: '',
-      nickname: 'choewy',
-      password: 'test',
+      nickname: '',
+      password: '',
     },
   },
   {
@@ -29,6 +37,22 @@ export const UserSignupTestCases = () => [
       email: 'test@test.com',
       nickname: 'test',
       password: 'test',
+    },
+  },
+  {
+    statusCode: 400,
+    body: {
+      email: 'test@test.com',
+      nickname: '',
+      password: '',
+    },
+  },
+  {
+    statusCode: 400,
+    body: {
+      email: 'test@test.com',
+      nickname: 'test',
+      password: '',
     },
   },
 ];

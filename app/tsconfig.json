@@ -9,14 +9,6 @@
     "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": [
-    "./src/**/*",
-    "./bin",
-    "app.ts",
-    "src/modules/app/app.controller.ts",
-    "src/modules/posts/error/post.pipe.error.ts",
-    "app.middlware.ts",
-    "test"
-  ],
+  "include": ["./src/**/*", "./bin", "app.ts", "test"],
   "exclude": ["node_modules"]
 }
