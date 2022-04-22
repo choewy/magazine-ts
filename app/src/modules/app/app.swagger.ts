@@ -6,7 +6,7 @@ const yamlPath = path.join(__dirname, '../../../swagger.config.yaml');
 const swaggerYaml = YAML.load(yamlPath);
 
 const Swagger = () => ({
-  url: '/apiDocs',
+  url: '/apis',
   serve: swaggerUi.serve,
   setup: swaggerUi.setup(swaggerYaml),
 });
