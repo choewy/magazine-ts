@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magazine API Server</title>
+    <style>
+      .methods {
+        display: inline-flex;
+        width: 60px;
+      }
+      .details {
+        list-style: none;
+        padding-left: 20px;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      summary {
+        cursor: pointer;
+      }
+      a:hover,
+      summary:hover {
+        text-decoration: underline;
+      }
+      body {
+        background-color: aliceblue;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      header {
+        text-align: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+      }
+      section {
+        width: 500px;
+        background-color: #fff;
+        padding: 30px 50px;
+        border: 0;
+        border-radius: 15px;
+      }
+      h1 {
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <header>
+          <h1>Magazine API Server</h1>
+        </header>
+
+        <h3>Swagger</h3>
+        <ul>
+          <li><a href="/apis">Swagger UI</a></li>
+        </ul>
+
+        <h3>GitHub</h3>
+        <ul>
+          <li>
+            <a href="https://github.com/choewy/typescript-magazine"
+              >Typescript Version</a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/PBL-magazine/backend-choewy"
+              >Javascript Version</a
+            >
+          </li>
+        </ul>
+
+        <h3>API Docs</h3>
+        <ul class="details">
+          <li>
+            <details>
+              <summary>About Users</summary>
+              <ul>
+                <li>
+                  <div class="methods">POST</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/users/01.%EC%82%AC%EC%9A%A9%EC%9E%90%20%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.md"
+                    >/api/users/signup</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">POST</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/users/02.%EC%82%AC%EC%9A%A9%EC%9E%90%20%EB%A1%9C%EA%B7%B8%EC%9D%B8.md"
+                    >/api/users/signin</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">GET</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/users/03.%EC%82%AC%EC%9A%A9%EC%9E%90%20%EC%9D%B8%EC%A6%9D%20%ED%99%95%EC%9D%B8.md"
+                    >/api/users/auth</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>About Posts</summary>
+              <ul>
+                <li>
+                  <div class="methods">GET</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/01.%EC%A0%84%EC%B2%B4%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%A1%B0%ED%9A%8C.md"
+                    >/api/posts</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">POST</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/02.%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%83%9D%EC%84%B1.md"
+                    >/api/posts</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">GET</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/03.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%A1%B0%ED%9A%8C.md"
+                    >/api/posts/{:post_id}</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">PATCH</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/04.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%88%98%EC%A0%95.md"
+                    >/api/posts/{:post_id}</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">DELETE</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/05.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%82%AD%EC%A0%9C.md"
+                    >/api/posts/{:post_id}</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>About Likes</summary>
+              <ul>
+                <li>
+                  <div class="methods">PUT</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/06.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%A2%8B%EC%95%84%EC%9A%94%20%EC%83%81%ED%83%9C%20%EB%B3%80%EA%B2%BD.md"
+                    >/api/posts/{:post_id}/like</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>About Comments</summary>
+              <ul>
+                <li>
+                  <div class="methods">GET</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/07.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EC%A0%84%EC%B2%B4%20%EB%8C%93%EA%B8%80%20%EC%A1%B0%ED%9A%8C.md"
+                    >/api/posts/{:post_id}/comments</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">POST</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/08.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EB%8C%93%EA%B8%80%20%EC%83%9D%EC%84%B1.md"
+                    >/api/posts/{:post_id}/comments</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">PATCH</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/09.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EB%8C%93%EA%B8%80%20%EC%88%98%EC%A0%95.md.md"
+                    >/api/posts/{:post_id}/comments/{:comment_id}</a
+                  >
+                </li>
+                <li>
+                  <div class="methods">DELETE</div>
+                  <a
+                    href="https://github.com/PBL-magazine/backend-choewy/blob/master/Docs/API/posts/10.%ED%8A%B9%EC%A0%95%20%EA%B2%8C%EC%8B%9C%EB%AC%BC%20%EB%8C%93%EA%B8%80%20%EC%82%AD%EC%A0%9C.md"
+                    >/api/posts/{:post_id}/comments/{:comment_id}</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

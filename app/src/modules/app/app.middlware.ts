@@ -3,6 +3,7 @@ import Swagger from './app.swagger';
 import morgan from 'morgan';
 import cors from 'cors';
 import { uploadPath } from '../../configs/multer.config';
+import { publicPath } from './app.public';
 
 export const setMiddlewares = (app: Express) => {
   app.use(express.json());
@@ -11,4 +12,5 @@ export const setMiddlewares = (app: Express) => {
   app.use(morgan('dev'));
   app.use(cors());
   app.use('/image', express.static(uploadPath));
+  app.use('/', express.static(publicPath));
 };
