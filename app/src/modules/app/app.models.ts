@@ -21,6 +21,7 @@ const sequelize = new Sequelize({
     underscored: true,
     freezeTableName: true,
   },
+  logging: false,
 });
 
 const db = {
