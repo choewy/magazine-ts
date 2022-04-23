@@ -13,7 +13,7 @@ export class PostPipe {
     try {
       const { file } = req;
       if (!file) throw new PostPipeError.EmptyImage();
-      req.body.image_url = `/image/${file.filename}.png`;
+      req.body.image_url = `/image/${file.filename}`;
       next();
     } catch (error) {
       const { code, body } = new Exception(error);
