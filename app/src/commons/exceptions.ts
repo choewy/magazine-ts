@@ -1,35 +1,31 @@
 import { ValidationError } from 'joi';
 import { HTTPError } from './errors';
 
-export class Exception extends Error {
+export interface Exception {
   code: number;
-  body: {};
+  body: {
+    ok?: false;
+    message: string;
+  };
+}
+
+export class Exception extends Error implements Exception {
   constructor(error: unknown) {
+    let message: string = '';
+    let code: number = 500;
+
     if (error instanceof ValidationError) {
-      const message = error.details[0].message;
-      super(message);
-      this.code = 400;
-      this.body = {
-        ok: false,
-        message,
-      };
+      message = error.details[0].message;
+      code = 400;
     } else if (error instanceof HTTPError) {
-      const message = error.message;
-      super(message);
-      this.code = error.code;
-      this.body = {
-        ok: false,
-        message,
-      };
-    } else {
-      const message = '서버 내부적인 오류입니다.';
-      super(message);
-      this.code = 500;
-      this.body = {
-        ok: false,
-        message,
-        error,
-      };
+      message = error.message;
+      code = error.code;
     }
+
+    super(message);
+    this.code = code;
+    this.body = {
+      message,
+    };
   }
 }
