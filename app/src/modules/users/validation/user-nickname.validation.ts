@@ -6,5 +6,4 @@ export const UserNickname = () =>
     'string.empty': '닉네임을 입력하세요.',
     'string.min': '닉네임은 3~10자 이내로 입력하세요.',
     'string.max': '닉네임은 3~10자 이내로 입력하세요.',
-    'string.base': '닉네임 형식에 맞지 않습니다.',
   });
