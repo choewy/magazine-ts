@@ -3,7 +3,7 @@ import { HTTPError } from '../../../commons/errors';
 export const CommentPipeError = {
   EmptyContent: class extends HTTPError {
     constructor() {
-      super(400, '댓글의 내용을 입력하세요.');
+      super(400, '댓글 내용을 입력하세요.');
     }
   },
   NotFound: class extends HTTPError {
