@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { CommentPipe } from '../src/modules/comments/comments.pipe';
-import { TestCase } from '../__case__/A-unit-06.comments.content.valid.case';
+import { PostPipe } from '../src/modules/posts/posts.pipe';
+import { TestCase } from '../__case__/A-unit-06.posts.image.valid.case';
 
-const mockRequest = (body: Object): Request => {
+const mockRequest = (file: Object | null): Request => {
   const req = {
-    body: body,
+    body: { image_url: '' },
+    file,
   };
   return req as Request;
 };
@@ -18,19 +19,19 @@ const mockResponse = (): Response => {
 };
 
 const RunTest = (testCase: TestCase) => {
-  const { description, body, statusCode, message } = testCase;
+  const { description, file, statusCode, message } = testCase;
   return it(description, async () => {
     const res = mockResponse();
-    const req = mockRequest(body);
+    const req = mockRequest(file);
     const next = jest.fn();
-    await CommentPipe.Content(req, res, next);
+    await PostPipe.Image(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
     statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
 
-describe('댓글 내용 유효성 검사', () => {
+describe('게시물 이미지 파일 유효성 검사', () => {
   TestCase.forEach((testCase) => {
     RunTest(testCase);
   });

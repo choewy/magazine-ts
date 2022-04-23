@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserPipe } from '../src/modules/users/users.pipe';
-import { TestCase } from '../__case__/A-unit-03.users.password.valid2.case';
+import { TestCase } from '../__case__/A-unit-04.users.password.valid2.case';
 
 const mockRequest = (body: Object): Request => {
   const req = { body };

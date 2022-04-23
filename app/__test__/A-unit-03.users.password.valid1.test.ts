@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
-import { PostPipe } from '../src/modules/posts/posts.pipe';
-import { TestCase } from '../__case__/A-unit-04.posts.content.valid.case';
+import { UserPipe } from '../src/modules/users/users.pipe';
+import { TestCase } from '../__case__/A-unit-03.users.password.valid1.case';
 
 const mockRequest = (body: Object): Request => {
-  const req = {
-    body: body,
-  };
+  const req = { body };
   return req as Request;
 };
 
@@ -23,14 +21,14 @@ const RunTest = (testCase: TestCase) => {
     const res = mockResponse();
     const req = mockRequest(body);
     const next = jest.fn();
-    await PostPipe.Content(req, res, next);
+    await UserPipe.Password(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
     statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
 
-describe('게시물 내용 유효성 검사', () => {
+describe('비밀번호 적합성 검사(1)', () => {
   TestCase.forEach((testCase) => {
     RunTest(testCase);
   });
