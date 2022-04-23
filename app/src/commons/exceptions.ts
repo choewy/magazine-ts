@@ -17,7 +17,9 @@ export class Exception extends Error implements Exception {
     if (error instanceof ValidationError) {
       message = error.details[0].message;
       code = 400;
-    } else if (error instanceof HTTPError) {
+    }
+
+    if (error instanceof HTTPError) {
       message = error.message;
       code = error.code;
     }
