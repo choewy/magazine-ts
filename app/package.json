@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --setupFiles dotenv/config --forceExit --detectOpenHandles --runInBand --coverage",
     "build": "tsc",
-    "start": "node dist/bin/www.js",
+    "start": "node bin/www.js",
     "start:dev": " nodemon --watch \"app/**/*.ts\" --exec \"ts-node\" bin/www.ts"
   },
   "keywords": [],
