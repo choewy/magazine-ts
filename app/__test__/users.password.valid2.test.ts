@@ -16,13 +16,14 @@ const mockResponse = (): Response => {
 };
 
 const RunTest = (testCase: TestCase) => {
-  const { description, body, statusCode } = testCase;
+  const { description, body, statusCode, message } = testCase;
   return it(description, async () => {
     const res = mockResponse();
     const req = mockRequest(body);
     const next = jest.fn();
     await UserPipe.NicknameInPwd(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
+    statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
