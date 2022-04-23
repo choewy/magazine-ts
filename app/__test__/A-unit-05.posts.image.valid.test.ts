@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
-import { UserPipe } from '../src/modules/users/users.pipe';
-import { TestCase } from '../__case__/users.password.valid2.case';
+import { PostPipe } from '../src/modules/posts/posts.pipe';
+import { TestCase } from '../__case__/A-unit-05.posts.image.valid.case';
 
-const mockRequest = (body: Object): Request => {
-  const req = { body };
+const mockRequest = (file: Object | null): Request => {
+  const req = {
+    body: { image_url: '' },
+    file,
+  };
   return req as Request;
 };
 
@@ -16,19 +19,19 @@ const mockResponse = (): Response => {
 };
 
 const RunTest = (testCase: TestCase) => {
-  const { description, body, statusCode, message } = testCase;
+  const { description, file, statusCode, message } = testCase;
   return it(description, async () => {
     const res = mockResponse();
-    const req = mockRequest(body);
+    const req = mockRequest(file);
     const next = jest.fn();
-    await UserPipe.NicknameInPwd(req, res, next);
+    await PostPipe.Image(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
     statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
 
-describe('비밀번호 적합성 검사(2)', () => {
+describe('게시물 이미지 파일 유효성 검사', () => {
   TestCase.forEach((testCase) => {
     RunTest(testCase);
   });

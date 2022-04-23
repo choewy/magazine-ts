@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../app';
 import { UserSigninDto } from '../src/modules/users/dto/user-signin.dto';
-import { UserSigninTestCases } from '../__case__/users.signin.case';
+import { UserSigninTestCases } from '../__case__/B-logic-02.users.signin.case';
 
 const url = '/api/users/signin';
 const testCases = UserSigninTestCases();

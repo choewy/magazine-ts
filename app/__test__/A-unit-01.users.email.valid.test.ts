@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import { PostPipe } from '../src/modules/posts/posts.pipe';
-import { TestCase } from '../__case__/posts.image.valid.case';
+import { UserPipe } from '../src/modules/users/users.pipe';
+import { TestCase } from '../__case__/A-unit-01.users.email.valid.case';
 
-const mockRequest = (file: Object | null): Request => {
+const mockRequest = (body: Object): Request => {
   const req = {
-    body: { image_url: '' },
-    file,
+    body: body,
   };
   return req as Request;
 };
@@ -19,19 +18,19 @@ const mockResponse = (): Response => {
 };
 
 const RunTest = (testCase: TestCase) => {
-  const { description, file, statusCode, message } = testCase;
+  const { description, body, statusCode, message } = testCase;
   return it(description, async () => {
     const res = mockResponse();
-    const req = mockRequest(file);
+    const req = mockRequest(body);
     const next = jest.fn();
-    await PostPipe.Image(req, res, next);
+    await UserPipe.Email(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
     statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
 
-describe('게시물 이미지 파일 유효성 검사', () => {
+describe('이메일 적합성 검사', () => {
   TestCase.forEach((testCase) => {
     RunTest(testCase);
   });

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { UserPipe } from '../src/modules/users/users.pipe';
-import { TestCase } from '../__case__/users.email.valid.case';
+import { CommentPipe } from '../src/modules/comments/comments.pipe';
+import { TestCase } from '../__case__/A-unit-06.comments.content.valid.case';
 
 const mockRequest = (body: Object): Request => {
   const req = {
@@ -23,14 +23,14 @@ const RunTest = (testCase: TestCase) => {
     const res = mockResponse();
     const req = mockRequest(body);
     const next = jest.fn();
-    await UserPipe.Email(req, res, next);
+    await CommentPipe.Content(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
     statusCode && expect(res.send).toBeCalledWith({ message });
     !statusCode && expect(next).toBeCalled();
   });
 };
 
-describe('이메일 적합성 검사', () => {
+describe('댓글 내용 유효성 검사', () => {
   TestCase.forEach((testCase) => {
     RunTest(testCase);
   });

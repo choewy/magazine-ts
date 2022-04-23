@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../app';
 import db from '../src/modules/app/app.models';
 import { UserSignupDto } from '../src/modules/users/dto/user-signup.dto';
-import { UserSignupTestCases } from '../__case__/users.signup.case';
+import { UserSignupTestCases } from '../__case__/B-logic-01.users.signup.case';
 
 beforeAll(async () => await db.sequelize.sync({ force: true }));
 
