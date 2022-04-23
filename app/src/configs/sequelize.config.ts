@@ -1,4 +1,4 @@
-const config = {
+const configs = {
   development: {
     username: 'root',
     password: 'root',
@@ -25,16 +25,11 @@ const config = {
   },
 };
 
+type Environments = 'test' | 'development' | 'production';
 const SequelizeConfig = (env: string) => {
-  switch (env) {
-    case 'test':
-      return config.test;
-    case 'production':
-      return config.production;
-    case 'development':
-    default:
-      return config.development;
-  }
+  return Object.keys(configs).includes(env)
+    ? configs[env as Environments]
+    : configs['development'];
 };
 
 export default SequelizeConfig;

@@ -5,7 +5,7 @@ import UserModel from '../users/users.model';
 import LikeModel from '../likes/likes.model';
 import CommentModel from '../comments/comments.model';
 
-const env: string = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 const config = SequelizeConfig(env);
 
 const sequelize = new Sequelize({
