@@ -46,7 +46,7 @@ export class UserService extends UserRepository {
 
       const userPayload = { email, nickname: userPasswordDto.nickname };
       const accessToken = AppUtils.GenToken(userPayload);
-      res.cookie('token', accessToken);
+      res.cookie('token', accessToken, {sameSite: 'none', secure: true});
       return res.status(200).send({ ok: true, token: accessToken });
     } catch (error) {
       const { code, body } = new Exception(error);
