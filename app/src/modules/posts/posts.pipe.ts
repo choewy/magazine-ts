@@ -4,14 +4,9 @@ import { PipePromise } from '../../commons/interfaces';
 import { PostPipeError } from './error/post.pipe.error';
 import { PostService } from './posts.service';
 
-export interface PostNewDto {
-  content?: string;
-  image_url?: string;
-}
-
 export class PostPipe {
   public static async Image(
-    req: Request<PostNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
@@ -27,7 +22,7 @@ export class PostPipe {
   }
 
   public static async Content(
-    req: Request<PostNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {

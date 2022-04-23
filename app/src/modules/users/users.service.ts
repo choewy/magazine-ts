@@ -8,7 +8,7 @@ import { UserRepository } from './users.repository';
 
 export class UserService extends UserRepository {
   public static Signup = async (
-    req: Request<UserSignupDto>,
+    req: Request,
     res: Response
   ): Promise<Response> => {
     try {
@@ -31,7 +31,7 @@ export class UserService extends UserRepository {
   };
 
   public static Signin = async (
-    req: Request<UserSigninDto>,
+    req: Request,
     res: Response
   ): Promise<Response> => {
     try {

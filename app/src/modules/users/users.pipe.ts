@@ -9,16 +9,9 @@ import { UserPassword } from './validation/user-password.validation';
 import { UserService } from './users.service';
 import { UserServiceError } from './error/user.service.error';
 
-export interface UserNewDto {
-  email: string;
-  nickname: string;
-  password: string;
-  confirmPassword: string;
-}
-
 export class UserPipe {
   public static async Email(
-    req: Request<UserNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
@@ -33,7 +26,7 @@ export class UserPipe {
   }
 
   public static async Nickname(
-    req: Request<UserNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
@@ -48,7 +41,7 @@ export class UserPipe {
   }
 
   public static async Password(
-    req: Request<UserNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
@@ -63,7 +56,7 @@ export class UserPipe {
   }
 
   public static async NicknameInPwd(
-    req: Request<UserNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
@@ -79,7 +72,7 @@ export class UserPipe {
   }
 
   public static async ConfirmPassword(
-    req: Request<UserNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {

@@ -4,13 +4,9 @@ import { PipePromise } from '../../commons/interfaces';
 import { CommentService } from './comments.service';
 import { CommentPipeError } from './error/comment.pipe.error';
 
-export interface CommentNewDto {
-  content?: string;
-}
-
 export class CommentPipe {
   public static async Content(
-    req: Request<CommentNewDto>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<PipePromise> {
