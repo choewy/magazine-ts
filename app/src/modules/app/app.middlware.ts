@@ -10,6 +10,7 @@ export const setMiddlewares = (app: Express) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(Swagger.url, Swagger.serve, Swagger.setup);
   app.use(morgan('dev'));
+  app.set("trust proxy", 1);
   app.use(cors({ origin: true, credentials: true }));
   app.use('/image', express.static(uploadPath));
   app.use('/', express.static(publicPath));

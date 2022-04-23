@@ -22,7 +22,7 @@ export class UserService extends UserRepository {
       await this.createUser(userSignupDto);
       const userPayload = { email, nickname };
       const accessToken = AppUtils.GenToken(userPayload);
-      res.cookie('token', accessToken);
+      res.cookie('token', accessToken, {sameSite: 'none', secure: true});
       return res.status(201).send({ ok: true, token: accessToken });
     } catch (error) {
       const { code, body } = new Exception(error);
