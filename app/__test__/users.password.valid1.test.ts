@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import { UserPipe } from '../src/modules/users/users.pipe';
-import { TestCase } from '../__case__/users.password.valid.case';
+import { TestCase } from '../__case__/users.password.valid1.case';
+
+const mockRequest = (body: Object): Request => {
+  const req = { body };
+  return req as Request;
+};
 
 const mockResponse = (): Response => {
   const res = {
@@ -10,16 +15,11 @@ const mockResponse = (): Response => {
   return res as Response;
 };
 
-const mockRequest = (password: string): Request => {
-  const req = { body: { password } };
-  return req as Request;
-};
-
 const RunTest = (testCase: TestCase) => {
-  const { description, password, statusCode } = testCase;
+  const { description, body, statusCode } = testCase;
   return it(description, async () => {
     const res = mockResponse();
-    const req = mockRequest(password);
+    const req = mockRequest(body);
     const next = jest.fn();
     await UserPipe.Password(req, res, next);
     statusCode && expect(res.status).toBeCalledWith(statusCode);
