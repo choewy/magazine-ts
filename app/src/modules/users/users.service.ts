@@ -14,7 +14,6 @@ export class UserService extends UserRepository {
     try {
       const userSignupDto: UserSignupDto = req.body;
       const { email, nickname, password } = userSignupDto;
-
       const userExistance = await this.findUserByEmail(email);
       if (userExistance) throw new UserServiceError.AleadyExist();
 
