@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --setupFiles dotenv/config --forceExit --detectOpenHandles --runInBand --coverage",
-    "build": "tsc && cp swagger.config.yaml dist/swagger.config.yaml && cp -r public dist/public",
+    "build": "tsc",
     "start": "node dist/bin/www.js",
     "start:dev": " nodemon --watch \"app/**/*.ts\" --exec \"ts-node\" bin/www.ts"
   },
