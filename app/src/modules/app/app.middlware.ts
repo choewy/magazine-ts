@@ -7,17 +7,9 @@ import { publicPath } from './app.public';
 
 export const setMiddlewares = (app: Express) => {
   app.use(cors({ 
-    origin: [
-    "http://59.5.243.37",
-    "http://localhost:3000",
-    ], 
-    allowedHeaders: [
-      "http://59.5.243.37",
-      "http://localhost:3000",
-    ], 
-    exposedHeaders: [
-      'authorization'
-    ], 
+    origin: '*',
+    allowedHeaders: '*', 
+    exposedHeaders: '*', 
     credentials: true
   }));
   app.use(express.json());
